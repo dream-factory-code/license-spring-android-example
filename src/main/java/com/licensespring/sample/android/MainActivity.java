@@ -118,12 +118,10 @@ public class MainActivity extends AppCompatActivity
         String apiKey = etApiKey.getText().toString();
         String sharedKey = etSharedKey.getText().toString();
         String productCode = etProductCode.getText().toString();
-        String serviceUrl = etServiceUrl.getText().toString();
 
         if ("".equals(apiKey)
                 || "".equals(sharedKey)
-                || "".equals(productCode)
-                || "".equals(serviceUrl)) {
+                || "".equals(productCode)) {
             Toast.makeText(getApplicationContext(),
                     "No required fields should be empty.",
                     Toast.LENGTH_SHORT).show();
@@ -142,15 +140,22 @@ public class MainActivity extends AppCompatActivity
             appVersion = DEFAULT_APP_VERSION;
         }
 
-        LicenseSpringConfiguration config =
-                LicenseSpringConfiguration.builder()
+        LicenseSpringConfiguration.LicenseSpringConfigurationBuilder configBuilder =
+                LicenseSpringConfiguration
+                        .builder()
                         .apiKey(apiKey)
                         .productCode(productCode)
                         .sharedKey(sharedKey)
                         .appName(appName)
-                        .appVersion(appVersion)
-                        .serviceURL(serviceUrl)
-                        .build();
+                        .appVersion(appVersion);
+
+        String serviceUrl = etServiceUrl.getText().toString();
+
+        if (! "".equals(serviceUrl)) {
+            configBuilder.serviceURL(serviceUrl);
+        }
+
+        LicenseSpringConfiguration config = configBuilder.build();
 
         LicenseManager.getInstance()
                 .initialize(config, getApplicationContext());
