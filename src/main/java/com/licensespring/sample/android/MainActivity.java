@@ -125,7 +125,7 @@ public class MainActivity extends AppCompatActivity
                 || "".equals(productCode)
                 || "".equals(serviceUrl)) {
             Toast.makeText(getApplicationContext(),
-                    "No fields should be empty.",
+                    "No required fields should be empty.",
                     Toast.LENGTH_SHORT).show();
             return;
         }
